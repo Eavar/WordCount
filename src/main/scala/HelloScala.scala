@@ -14,8 +14,8 @@ object HelloScala {
     val sc = new SparkContext(conf)
 
     // Load the text into a Spark RDD, which is a distributed representation of each line of text
-    val textFile = sc.textFile("src/main/resources/shakespeare.txt")
-//    val textFile = sc.textFile("hdfs:///tmp/shakespeare.txt")
+    val textFile = sc.textFile("src/main/resources/shakespeare.txt")  //Windows
+//    val textFile = sc.textFile("hdfs:///tmp/shakespeare.txt") //Hadoop
 
     //word count
     val counts = textFile.flatMap(line => line.split(" "))
@@ -27,9 +27,9 @@ object HelloScala {
       .sortBy(_._2, ascending = false)
 
     counts.collect()
-    counts.foreach(System.out.println)
+    counts.take(10).foreach(System.out.println)
     System.out.println("Total words: " + counts.count())
-//    counts.saveAsTextFile("hdfs:///tmp/shakespeareWordCount")
+//    counts.saveAsTextFile("hdfs:///tmp/shakespeareWordCount") //Hadoop
   }
 
 }
