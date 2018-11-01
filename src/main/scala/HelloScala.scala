@@ -5,7 +5,7 @@ object HelloScala {
   def main(args: Array[String]): Unit = {
 
     //Set hadoop home dir for Windows
-    System.setProperty("hadoop.home.dir", "C:\\Users\\alexander.egorenkov\\Hadoop")
+//    System.setProperty("hadoop.home.dir", "C:\\Users\\alexander.egorenkov\\Hadoop")
 
     //Create a SparkContext to initialize Spark
     val conf = new SparkConf()
@@ -14,8 +14,8 @@ object HelloScala {
     val sc = new SparkContext(conf)
 
     // Load the text into a Spark RDD, which is a distributed representation of each line of text
-    val textFile = sc.textFile("src/main/resources/shakespeare.txt")  //Windows
-//    val textFile = sc.textFile("hdfs:///tmp/shakespeare.txt") //Hadoop
+//    val textFile = sc.textFile("src/main/resources/shakespeare.txt")  //Windows
+    val textFile = sc.textFile("hdfs:///user/alexander/shakespeare.txt") //Hadoop
 
     //word count
     val counts = textFile.flatMap(line => line.split(" "))
@@ -29,7 +29,7 @@ object HelloScala {
     counts.collect()
     counts.take(10).foreach(System.out.println)
     System.out.println("Total words: " + counts.count())
-//    counts.saveAsTextFile("hdfs:///tmp/shakespeareWordCount") //Hadoop
+    counts.saveAsTextFile("file:///home/admin/shakespeareWordCount") //Hadoop
   }
 
 }
